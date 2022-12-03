@@ -11,15 +11,18 @@ class Buzzer
 {
 private:
     uint8_t buzzer_pin;
+    uint16_t frequency;
 
 public:
-    void setup() const;
+    void setup();
+
+    void pin(uint8_t buzzer_pin);
+
+    void freq(uint16_t freq);
 
     void buzz() const;
 
     void buzz_and_blink() const;
-
-    explicit Buzzer(uint8_t buzzer_pin_);
 };
 
 #endif //BUZZER_H
