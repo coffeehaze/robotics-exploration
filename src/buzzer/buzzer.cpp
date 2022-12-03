@@ -14,14 +14,14 @@ Buzzer::Buzzer(uint8_t buzzer_pin_)
 
 void Buzzer::buzz() const
 {
-    tone(buzzer_pin, 2000);
+    tone(buzzer_pin, 100);
     delay(DELAY);
     noTone(buzzer_pin);
 }
 
 void Buzzer::buzz_and_blink() const
 {
-    tone(buzzer_pin, 2000);
+    tone(buzzer_pin, 100);
     digitalWrite(LED_BUILTIN, HIGH);
     delay(DELAY);
     noTone(buzzer_pin);
@@ -33,6 +33,6 @@ void Buzzer::setup() const
     pinMode(LED_BUILTIN, OUTPUT);
     pinMode(buzzer_pin, OUTPUT);
     digitalWrite(LED_BUILTIN, LOW);
-    analogWrite(buzzer_pin, LOW);
+    digitalWrite(buzzer_pin, LOW);
 }
 
