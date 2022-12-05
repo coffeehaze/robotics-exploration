@@ -15,7 +15,7 @@ void Buzzer::buzz() const
     tone(this->buzzer_pin, this->frequency);
 
     // take a moment for LED and Buzzer to HIGH
-    delay(0);
+    delay(DELAY);
 
     // De-Buzzing
     noTone(this->buzzer_pin);

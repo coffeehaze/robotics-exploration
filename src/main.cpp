@@ -1,36 +1,55 @@
 #include <Arduino.h>
 #include <buzzer/buzzer.h>
-#include "Servo.h"
+#include <led/led.h>
+#include <ldr/ldr.h>
+
+#define LDR_PIN A0
+#define LED_PIN 13
+#define BUZZER_PIN 6
+#define BUZZER_FREQ 100
 
 Buzzer bz;
-Servo main_servo;
-
-int angle = 0;
+LED led;
+LDR ldr;
 
 void setup()
 {
-    bz.setup();
-    bz.pin(6);
-    bz.freq(1000);
+    // initialize serial monitor with baud rate 9600
+    Serial.begin(9600);
+    Serial.flush();
 
-    main_servo.attach(9);
-    main_servo.write(0);
+    // initializing buzzer
+    bz.setup();
+    bz.pin(BUZZER_PIN);
+    bz.freq(BUZZER_FREQ);
+
+    // initializing LED
+    led.setup();
+    led.pin(LED_PIN);
+
+    // initialize LDR
+    ldr.pin_analog(A0);
+}
+
+void callback_below()
+{
+    Serial.println("BELOW 10%");
+}
+
+void callback_above()
+{
+    Serial.println("ABOVE 10%");
 }
 
 void loop()
 {
-//    // Sweep from 0 to 180 degrees:
-//    for (angle = 0; angle <= 180; angle += 1)
-//    {
-//        main_servo.write(angle);
-//    }
-//
-//    // And back from 180 to 0 degrees:
-//    for (angle = 180; angle >= 0; angle -= 1)
-//    {
-//        main_servo.write(angle);
-//    }
-//    delay(1000);
-    bz.buzz_and_blink();
-    delay(300000);
+    LDRData ldr_d = ldr.read();
+
+    callback_f dfa = &callback_above;
+    callback_f dfb = &callback_below;
+
+    ldr_d.call_at_percentage_above(10, dfa);
+    ldr_d.call_at_percentage_below(10, dfb);
+
+    delay(1000);
 }
